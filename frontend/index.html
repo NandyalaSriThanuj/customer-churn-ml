@@ -4,287 +4,490 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Customer Churn AI</title>
-
+    <title>ChurnAI | Enterprise Customer Retention & Churn Intelligence</title>
+    <meta name="description" content="Predict customer churn risk and understand key contributing factors with Explainable AI (TreeSHAP) and Groq LLM synthesis.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="app-wrapper">
 
-        <header>
-            <div>
-                <h1>Customer Churn AI</h1>
-                <p>Predict churn risk and understand why.</p>
+        <!-- Top Navigation -->
+        <nav class="navbar">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-title">
+                        ChurnAI <span class="brand-badge">Enterprise ML</span>
+                    </div>
+                    <span class="brand-subtitle">Explainable Retention Intelligence</span>
+                </div>
+            </a>
+
+            <div class="nav-actions">
+                <div id="apiStatusBadge" class="api-status" title="FastAPI Backend Health">
+                    <span id="apiStatusDot" class="status-indicator"></span>
+                    <span id="apiStatusText">Checking API...</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero & Model Info Section -->
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1>Predict Churn Risk with <span class="gradient-text">Explainable AI</span></h1>
+                <p class="hero-description">
+                    Empower your retention team with instant machine learning predictions. Identify at-risk subscribers, uncover root causes via TreeSHAP feature attribution, and receive automated natural-language action summaries.
+                </p>
+                <div class="hero-features">
+                    <span class="feature-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Real-Time Inference
+                    </span>
+                    <span class="feature-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        TreeSHAP Explainability
+                    </span>
+                    <span class="feature-pill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Groq LLM Synthesis
+                    </span>
+                </div>
             </div>
 
-            <div class="status">
-                ● API Connected
+            <!-- Model Specifications Card -->
+            <div class="model-card">
+                <div class="model-card-header">
+                    <div class="model-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10M7 12h10M7 17h10"/>
+                        </svg>
+                        Model Performance
+                    </div>
+                    <span class="model-status-chip">Production Ready</span>
+                </div>
+
+                <div class="model-metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Architecture</div>
+                        <div class="metric-val">Random Forest</div>
+                        <div class="metric-sub">Calibrated Ensemble</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">ROC-AUC Score</div>
+                        <div class="metric-val highlight">84.25%</div>
+                        <div class="metric-sub">Validation Set</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">F1-Score</div>
+                        <div class="metric-val highlight">63.21%</div>
+                        <div class="metric-sub">Optimized Threshold</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Inference Engine</div>
+                        <div class="metric-val">FastAPI</div>
+                        <div class="metric-sub">&lt; 50ms Latency</div>
+                    </div>
+                </div>
             </div>
         </header>
 
+        <!-- Quick Demo Presets Toolbar -->
+        <section class="preset-toolbar">
+            <div class="preset-info">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                <span>Quick Test Profiles:</span>
+            </div>
+            <div class="preset-buttons">
+                <button type="button" class="btn-preset danger-preset" id="presetHighRisk">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    High Risk Customer (Month-to-Month)
+                </button>
+                <button type="button" class="btn-preset loyal-preset" id="presetLoyal">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Loyal Customer (2-Year Contract)
+                </button>
+                <button type="button" class="btn-preset" id="presetDefault">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Reset Defaults
+                </button>
+            </div>
+        </section>
 
-        <main>
+        <!-- Main Layout -->
+        <main class="main-layout">
 
-            <!-- INPUT SECTION -->
-
-            <section class="card">
-
-                <h2>Customer Information</h2>
+            <!-- Customer Data Input Form -->
+            <section class="form-card">
+                <div class="form-header">
+                    <div class="form-title-group">
+                        <h2>Customer Profile & Account Details</h2>
+                        <p>Configure the customer's demographics, subscribed services, contract, and billing parameters.</p>
+                    </div>
+                </div>
 
                 <form id="predictionForm">
 
-                    <div class="grid">
-
-                        <div class="field">
-                            <label>Gender</label>
-                            <select id="gender">
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
+                    <!-- Section 1: Demographics & Account Details -->
+                    <fieldset class="form-section-block">
+                        <div class="section-legend">
+                            <div class="legend-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <span>1. Demographics & Account Tenure</span>
                         </div>
 
-                        <div class="field">
-                            <label>Senior Citizen</label>
-                            <select id="SeniorCitizen">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
+                        <div class="fields-grid-3">
+                            <div class="field">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="SeniorCitizen">Senior Citizen</label>
+                                <select id="SeniorCitizen" name="SeniorCitizen" required>
+                                    <option value="0">No (Under 65)</option>
+                                    <option value="1">Yes (65+)</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="Partner">Has Partner</label>
+                                <select id="Partner" name="Partner" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="Dependents">Has Dependents</label>
+                                <select id="Dependents" name="Dependents" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+
+                            <div class="field" style="grid-column: span 2;">
+                                <label for="tenure">
+                                    <span>Account Tenure</span>
+                                    <span class="field-hint" id="tenureLabel">5 Months</span>
+                                </label>
+                                <div class="tenure-slider-wrapper">
+                                    <input type="range" id="tenureSlider" min="0" max="72" value="5">
+                                    <input id="tenure" type="number" min="0" max="72" value="5" required>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Section 2: Phone & Connectivity Services -->
+                    <fieldset class="form-section-block">
+                        <div class="section-legend">
+                            <div class="legend-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>
+                                </svg>
+                            </div>
+                            <span>2. Connectivity & Phone Services</span>
                         </div>
 
-                        <div class="field">
-                            <label>Partner</label>
-                            <select id="Partner">
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
+                        <div class="fields-grid-3">
+                            <div class="field">
+                                <label for="PhoneService">Phone Service</label>
+                                <select id="PhoneService" name="PhoneService" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="MultipleLines">Multiple Lines</label>
+                                <select id="MultipleLines" name="MultipleLines" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No phone service">No phone service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="InternetService">Internet Service Provider</label>
+                                <select id="InternetService" name="InternetService" required>
+                                    <option value="Fiber optic">Fiber optic</option>
+                                    <option value="DSL">DSL</option>
+                                    <option value="No">No (None)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Section 3: Add-on Services & Security -->
+                    <fieldset class="form-section-block">
+                        <div class="section-legend">
+                            <div class="legend-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                            </div>
+                            <span>3. Digital Add-ons, Streaming & Support</span>
                         </div>
 
-                        <div class="field">
-                            <label>Dependents</label>
-                            <select id="Dependents">
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
+                        <div class="fields-grid-3">
+                            <div class="field">
+                                <label for="OnlineSecurity">Online Security</label>
+                                <select id="OnlineSecurity" name="OnlineSecurity" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="OnlineBackup">Online Backup</label>
+                                <select id="OnlineBackup" name="OnlineBackup" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="DeviceProtection">Device Protection</label>
+                                <select id="DeviceProtection" name="DeviceProtection" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="TechSupport">Tech Support</label>
+                                <select id="TechSupport" name="TechSupport" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="StreamingTV">Streaming TV</label>
+                                <select id="StreamingTV" name="StreamingTV" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="StreamingMovies">Streaming Movies</label>
+                                <select id="StreamingMovies" name="StreamingMovies" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Section 4: Contract, Payment & Billing -->
+                    <fieldset class="form-section-block">
+                        <div class="section-legend">
+                            <div class="legend-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                                </svg>
+                            </div>
+                            <span>4. Contract, Billing & Financials</span>
                         </div>
 
-                        <div class="field">
-                            <label>Tenure (months)</label>
-                            <input id="tenure" type="number" min="0" value="5">
+                        <div class="fields-grid-3">
+                            <div class="field">
+                                <label for="Contract">Contract Term</label>
+                                <select id="Contract" name="Contract" required>
+                                    <option value="Month-to-month">Month-to-month</option>
+                                    <option value="One year">One year</option>
+                                    <option value="Two year">Two year</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="PaperlessBilling">Paperless Billing</label>
+                                <select id="PaperlessBilling" name="PaperlessBilling" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="PaymentMethod">Payment Method</label>
+                                <select id="PaymentMethod" name="PaymentMethod" required>
+                                    <option value="Electronic check">Electronic check</option>
+                                    <option value="Mailed check">Mailed check</option>
+                                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="MonthlyCharges">Monthly Charges ($)</label>
+                                <input id="MonthlyCharges" name="MonthlyCharges" type="number" step="0.01" min="0" value="80.50" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="TotalCharges">Total Charges ($)</label>
+                                <input id="TotalCharges" name="TotalCharges" type="number" step="0.01" min="0" value="400.20" required>
+                            </div>
                         </div>
+                    </fieldset>
 
-                        <div class="field">
-                            <label>Phone Service</label>
-                            <select id="PhoneService">
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Multiple Lines</label>
-                            <select id="MultipleLines">
-                                <option>No</option>
-                                <option>Yes</option>
-                                <option>No phone service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Internet Service</label>
-                            <select id="InternetService">
-                                <option>Fiber optic</option>
-                                <option>DSL</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Online Security</label>
-                            <select id="OnlineSecurity">
-                                <option>No</option>
-                                <option>Yes</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Online Backup</label>
-                            <select id="OnlineBackup">
-                                <option>No</option>
-                                <option>Yes</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Device Protection</label>
-                            <select id="DeviceProtection">
-                                <option>No</option>
-                                <option>Yes</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Tech Support</label>
-                            <select id="TechSupport">
-                                <option>No</option>
-                                <option>Yes</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Streaming TV</label>
-                            <select id="StreamingTV">
-                                <option>Yes</option>
-                                <option>No</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Streaming Movies</label>
-                            <select id="StreamingMovies">
-                                <option>Yes</option>
-                                <option>No</option>
-                                <option>No internet service</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Contract</label>
-                            <select id="Contract">
-                                <option>Month-to-month</option>
-                                <option>One year</option>
-                                <option>Two year</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Paperless Billing</label>
-                            <select id="PaperlessBilling">
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Payment Method</label>
-                            <select id="PaymentMethod">
-
-                                <option>
-                                    Electronic check
-                                </option>
-
-                                <option>
-                                    Mailed check
-                                </option>
-
-                                <option>
-                                    Bank transfer (automatic)
-                                </option>
-
-                                <option>
-                                    Credit card (automatic)
-                                </option>
-
-                            </select>
-                        </div>
-
-                        <div class="field">
-                            <label>Monthly Charges</label>
-                            <input
-                                id="MonthlyCharges"
-                                type="number"
-                                step="0.01"
-                                value="80.50"
-                            >
-                        </div>
-
-                        <div class="field">
-                            <label>Total Charges</label>
-                            <input
-                                id="TotalCharges"
-                                type="number"
-                                step="0.01"
-                                value="400.20"
-                            >
-                        </div>
-
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="btnClearForm">
+                            Reset Values
+                        </button>
+                        <button type="submit" class="btn-primary" id="btnSubmit">
+                            <span id="btnIcon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                </svg>
+                            </span>
+                            <span id="btnText">Run Churn Prediction</span>
+                        </button>
                     </div>
-
-                    <button type="submit">
-                        🔮 Predict Churn
-                    </button>
 
                 </form>
-
             </section>
 
-
-            <!-- RESULT SECTION -->
-
-            <section
-                id="result"
-                class="card result-card hidden"
-            >
-
-                <h2>Prediction Result</h2>
-
-                <div class="probability">
-
-                    <span id="probability">
-                        0%
-                    </span>
-
-                    <small>
-                        Churn Probability
-                    </small>
-
+            <!-- Results Dashboard Section -->
+            <section id="result" class="result-card hidden">
+                <div class="result-header">
+                    <div class="result-title-group">
+                        <h2>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                            Prediction Intelligence Analysis
+                        </h2>
+                    </div>
+                    <span class="result-timestamp" id="resultTimestamp">Just now</span>
                 </div>
 
-
-                <div id="prediction"
-                     class="prediction">
-                </div>
-
-
-                <div class="factors">
-
-                    <h3>
-                        🔍 Top Influencing Factors
-                    </h3>
-
-                    <div id="factorsList">
+                <!-- Overview: Circular Probability Gauge + Status Assessment -->
+                <div class="result-overview-grid">
+                    
+                    <!-- Circular Gauge -->
+                    <div class="gauge-box">
+                        <div class="status-header">Churn Risk Probability</div>
+                        <div class="gauge-container">
+                            <svg class="gauge-svg" viewBox="0 0 160 160">
+                                <circle class="gauge-bg" cx="80" cy="80" r="70" />
+                                <circle id="gaugeFill" class="gauge-fill" cx="80" cy="80" r="70" />
+                            </svg>
+                            <div class="gauge-center-content">
+                                <span id="probability" class="gauge-percentage">0%</span>
+                                <span class="gauge-subtext">Calculated Risk</span>
+                            </div>
+                        </div>
+                        <div id="riskLevelText" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">
+                            Evaluating Profile...
+                        </div>
                     </div>
 
+                    <!-- Status Assessment -->
+                    <div class="status-box">
+                        <div>
+                            <div class="status-header">Binary Classification Outcome</div>
+                            <div id="prediction" class="prediction-pill safe">
+                                No Churn
+                            </div>
+                        </div>
+
+                        <div id="statusDetails" class="status-details">
+                            This customer exhibits profile indicators evaluated by the model. Review the primary SHAP factors below for targeted retention actions.
+                        </div>
+                    </div>
                 </div>
 
+                <!-- SHAP Feature Attribution -->
+                <div class="factors-section">
+                    <div class="section-subheading">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+                            </svg>
+                            Top Influencing Factors (TreeSHAP)
+                        </h3>
+                        <div class="factors-legend">
+                            <span class="legend-item">
+                                <span class="legend-dot danger-dot"></span> Increases Churn Risk
+                            </span>
+                            <span class="legend-item">
+                                <span class="legend-dot safe-dot"></span> Decreases Churn Risk
+                            </span>
+                        </div>
+                    </div>
 
-                <div class="explanation">
+                    <div id="factorsList" class="factors-grid">
+                        <!-- Factors dynamically injected by app.js -->
+                    </div>
+                </div>
 
-                    <h3>
-                        🤖 AI Explanation
-                    </h3>
+                <!-- AI Natural Language Synthesis (Groq) -->
+                <div class="explanation-card">
+                    <div class="explanation-header">
+                        <div class="explanation-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/>
+                            </svg>
+                            AI Synthesis & Executive Summary
+                        </div>
+                        <span class="ai-engine-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                            Groq LLM Engine
+                        </span>
+                    </div>
 
-                    <p id="explanationText">
+                    <p id="explanationText" class="explanation-text">
+                        Generating AI analysis...
                     </p>
-
                 </div>
-
             </section>
 
         </main>
 
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-brand">
+                ChurnAI Retention Intelligence Platform
+            </div>
+            <div>
+                Powered by FastAPI, Scikit-Learn & TreeSHAP
+            </div>
+        </footer>
+
     </div>
 
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="app.js"></script>
-
 </body>
 
 </html>
