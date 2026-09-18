@@ -1,0 +1,13 @@
+api/
+models/
+data/
+src/
+notebooks/
+tests/
+venv/
+*.pkl
+*.ipynb
+requirements.txt
+.python-version
+.env
+__pycache__/
